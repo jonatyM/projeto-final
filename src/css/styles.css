@@ -1,0 +1,31 @@
+#scta { 
+    width: 70%; 
+    margin: 20px auto 0px auto;
+    }
+#cadastroLivro { 
+    width: 40%; 
+    margin: 20px auto 0px auto;
+    }
+#tblLivro{
+   width: 65%; 
+   margin: 20px auto 0px auto;
+}
+.red-alert{
+  color: red;
+  font-size: 0.9em;
+}
+hr {
+    border-color: #EE9056;
+    border-style: solid none;
+    border-width: 1px 0;
+    margin: 18px 0;
+}
+.removido { 
+    color: rgb(100, 2, 2); 
+  }
+  .removido label {
+    text-decoration: line-through; 
+  }   
+ul li { 
+    list-style-type: none; 
+  }
