@@ -1,31 +1,60 @@
-#scta { 
-    width: 70%; 
-    margin: 20px auto 0px auto;
-    }
-#cadastroLivro { 
-    width: 40%; 
-    margin: 20px auto 0px auto;
-    }
-#tblLivro{
-   width: 65%; 
-   margin: 20px auto 0px auto;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  text-align: center;
+  color: black;
 }
-.red-alert{
+body {
+  text-align: center;
+  background-size: cover; 
+}
+#scta { 
+  width: 70%; 
+  margin: 20px auto 10px auto;
+  padding: 10px;
+  background-color: darkolivegreen;  
+}
+#cadastroLivro { 
+  width: 50%; 
+  margin: 20px auto 0px auto;
+  padding-left: 20px;
+  padding-right: 20px;    
+  position: relative;
+}
+
+#tblLivro {
+  width: 65%; 
+  margin: 20px auto 0px auto;
+  text-align: justify;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: bisque;     
+}
+.red-alert {
   color: red;
-  font-size: 0.9em;
+  font-size: 0.7em;
 }
 hr {
-    border-color: #EE9056;
-    border-style: solid none;
-    border-width: 1px 0;
-    margin: 18px 0;
+  border-color: #EE9056;
+  border-style: solid none;
+  border-width: 3px 0;
+  margin: 18px;
+    
 }
 .removido { 
-    color: rgb(100, 2, 2); 
-  }
-  .removido label {
-    text-decoration: line-through; 
-  }   
+  color: rgb(100, 2, 2); 
+}
+.removido label {
+  text-decoration: line-through; 
+}   
 ul li { 
-    list-style-type: none; 
-  }
+  list-style-type: none; 
+}
+.img {
+  background-image: url("../assets/livro.png");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  width: 100px;
+  height: 100px;  
+  float: right;
+}

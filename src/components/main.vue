@@ -1,68 +1,56 @@
 <template>
-    <div id="scta" class="table-secondary">
-        <form >
-            <div id="cadastroLivro" class="form-gruup ">
-                
-                <h2 align="center">{{ cabecalho }}</h2>
-                <label><span class="red-alert">{{ vldLivro }}</span></label>
+    <div id="scta">
+        <div class="img">
+        </div>
+        <div id="cadastroLivro" class="table-secondary">            
+            <form @submit.prevent="addLivro" class="form-gruup ">               
+                <h2>{{ cabecalho }}</h2>               
+                <label>
+                    <span class="red-alert" v-if="!novoLivro && !novoAutor">{{ vldCampos1 }}</span>
+                    <span class="red-alert" v-if="novoLivro == novoAutor">{{ vldCampos2 }}</span>
+                    <br>
+                    <span class="red-alert" v-if="novoLivro.length < 2">{{ vldCampos3 }}</span>
+                    <br>
+                    <span class="red-alert" v-if="novoAutor.length < 4">{{ vldCampos4 }}</span>
+                </label>
+                <br>
                 <input v-model="novoLivro" type="text" placeholder="Titulo do livro..." class="form-control">
                 <br>
-                <label><span class="red-alert">{{ vldAutor }}</span></label>
-                <input v-model="novoAutor" type="text" placeholder="Autor do livro..." class="form-control">
+                <input v-model="novoAutor" placeholder="Autor do livro..." class="form-control">
                 <br/>
                 <span class="input-group-btn">
                     <button @click="addLivro"  type="submit" v-bind:disabled="!isValid" class="btn btn-success btn-block">Adicionar</button>
                 </span>
-                <br>
-            </div>
+                <br>            
+            </form>
+        </div>
 
-            <div id="tblLivro">
-                <hr>
-                <ul>
-                    <li  class="toggle" v-for="livro of livros" :key="livro.titulo.autor"  v-bind:class="{ 'removido': livro.checked }">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="list" v-model="livro.checked">
-                                <big>{{ livro.titulo }}</big> - <small>{{ livro.autor }}</small>
-                                <span aligin="right" >
-                                    <button class="btn btn-outline-danger" @click="removeLivro(livro)"> x </button>
-                                </span>                            
-                            </label>
-                        </div>
-                    </li>
-                </ul>
-            
-            </div>
-
-            <!--<footer class="footer" v-show="todos.length" v-cloak>
-                <span class="todo-count">
-                    <strong>{{ remaining }}</strong> {{ remaining | pluralize }} left
+        <div id="tblLivro" >
+            <hr>
+            <section v-for="livro in livros" :key="livro.titulo.autor"  v-bind:class="{ 'removido': livro.checked }">
+                <input type="checkbox" name="list" v-model="livro.checked">
+                <label>{{ livro.titulo }} - {{ livro.autor }}</label>
+                <span>
+                    <button id="bo" class="btn btn-outline-danger" @click="removeLivro(livro)">x</button>
                 </span>
-                <ul class="filters">
-                    <li><a href="#/all" :class="{ selected: visibility == 'all' }">Todos</a></li>
-                    <li><a href="#/active" :class="{ selected: visibility == 'active' }">Ativados</a></li>
-                    <li><a href="#/completed" :class="{ selected: visibility == 'completed' }">Concluído</a></li>
-                </ul>
-                <button class="clear-completed" @click="removeCompleted" v-show="livros.length > remaining">
-                    Clear completed
-                </button>   
-            </footer> -->
-          </form>
+            </section>               
+        </div>                 
     </div>
 </template>
 
 <script>
 export default {
-    name: 'scta',
+    name: 'scta',    
     data () {
         return {
             cabecalho: 'Livros Preferidos',
-            vldLivro: "*",
-            vldAutor: "*",            
-            error: [],
+            vldCampos1: "Campos obrigatorios.",
+            vldCampos2: "Não podem ser igual",
+            vldCampos3: "Campo titulo do livro deve ter no minimo 2 caracteres.",
+            vldCampos4: "Campo titulo do livro deve ter no minimo 4 caracteres.",
             livros: [],
             novoLivro: "",
-            novoAutor: "",                                  
+            novoAutor: "",                               
         }
     },
     mounted() {
@@ -77,22 +65,21 @@ export default {
     computed:{
         isValid: function(){
             return this.novoLivro != "" && this.novoAutor != ""
-            && this.novoLivro !== this.novoAutor
-            //&& this.livros.novoLivro.length < 2 && this.livros.novoAutor.length < 4
-        }
+            && this.novoLivro !== this.novoAutor 
+            && this.novoLivro.length >= 2 && this.novoAutor.length >= 4;
+        },        
     },
-    
     methods: {
         addLivro() {
-            var titulo, autor,
-            titulo = this.novoLivro.trim()
-            autor = this.novoAutor.trim()            
+            var titulo, autor;
+            titulo = this.novoLivro.trim();
+            autor = this.novoAutor.trim();            
             if (!titulo && autor) {
-                return true
+                return true;
             }
-            this.livros.push({titulo: titulo, autor: autor, checked: false })
-            this.novoLivro = ""
-            this.novoAutor = ""
+            this.livros.push({titulo: titulo, autor: autor, checked: false });
+            this.novoLivro = "";
+            this.novoAutor = "";
             this.saveLivro();           
         }, 
         removeLivro(livro){
@@ -103,41 +90,6 @@ export default {
             const parsed = JSON.stringify(this.livros);
             localStorage.setItem('livros', parsed);
         },
-    
-       /*validaCampos() {
-            var error = 0;
-            var titulo, autor,
-            titulo = this.novoLivro
-            autor = this.novoAutor
-            this.ResetError();
-            if(this.livros.novoLivro.length < 4){
-                this.error.vldLivro.push("Please, insert a valid name (4 characters)")
-                error++;
-            }
-
-            if(this.livros.novoAutor.length < 4){
-                this.error.vldAutor.push("Please, insert a valid name (4 characters)")
-                error++;
-            }
-
-            /*if(this.contact.subject.length < 4){
-                this.error.subject = "Invalid message (10 characters)";
-                error++;
-            }
-
-            if(this.contact.message.length < 4){
-                this.error.message = "Invalid message (10 characters)";
-                error++;
-            }/
-            return (error === 0);
-        },
-        ResetError : function(){
-            this.error.vldLivro = "*";
-            this.error.vldAutor = "*";
-        }, */       
     },
 }
 </script>
-<style>
-
-</style>
