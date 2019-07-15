@@ -47,7 +47,7 @@ export default {
             vldCampos1: "Campos obrigatorios.",
             vldCampos2: "Não podem ser igual",
             vldCampos3: "Campo titulo do livro deve ter no minimo 2 caracteres.",
-            vldCampos4: "Campo titulo do livro deve ter no minimo 4 caracteres.",
+            vldCampos4: "Campo Autor do livro deve ter no minimo 4 caracteres.",
             livros: [],
             novoLivro: "",
             novoAutor: "",                               
